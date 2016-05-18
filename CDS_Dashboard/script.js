@@ -1,4 +1,4 @@
-'use strict'
+'use strict';
 
 var chart;
 var chart2;
@@ -29,7 +29,7 @@ $(document).ready( function() {
 
 function widthChange(mq, desktopMq, desktopMq2) {
     if (mq.matches) {
-        $container.css('width', '550px')
+        $container.css('width', '550px');
         secondChart.css("height", "250px");
         secondChart.css('width', '300px');
         secondChart.css('display', 'block');
@@ -55,7 +55,6 @@ function widthChange(mq, desktopMq, desktopMq2) {
 var title = 'Projects';
 var chartType = 'pie';
 var subtitle = 'Click on a section to view more';
-var colors = Highcharts.getOptions().colors;
 var categories = ['Pre-Discovery', 'Discovery']; // category name matches 'name' property
 var name = 'Groups';
 var subtitle2 = 'Click section to Learn More';
@@ -234,28 +233,9 @@ var data = [{
         }
     }];  // end of data property
 
-function setChart(options) {
-    chart.setTitle({
-        text: options.title
-    }, {
-        text: options.subtitle
-    });
-    chart.series[0].remove(false); //boolean decides if it needs to redraw immediately, sinc we are doing more we do not set it to true, we remove the series
-    chart.xAxis[0].setCategories(options.categories, false);
-    chart.addSeries({
-        type: options.type,
-        name: options.name,
-        data: options.data,
-        color: options.color || 'white'
-    }, false); // adds the series (which contains the data) - we pass it a new object and tell it false so it doesn't automatically re-render
-     // xAxis[0] since there is only 1 axis - setCategory sets categories from the array you pass it (options.categories - you use false so it doesn't automatically redraw THUS you use chart.redraw() after)
-    chart.redraw() // redraws chart
-}
-
-
 function moveChart() {
     if (mq.matches) {
-        return 0
+        return 0;
     } else if (desktopMq.matches) {
         firstChart.animate({'marginLeft' : '-=200px'}, 100);
         firstChart.css('display', 'inline-block');
@@ -283,7 +263,7 @@ function setSecondChart(options) {
         color: options.color || 'white'
     }, false); // adds the series (which contains the data) - we pass it a new object and tell it false so it doesn't automatically re-render
      // xAxis[0] since there is only 1 axis - setCategory sets categories from the array you pass it (options.categories - you use false so it doesn't automatically redraw THUS you use chart.redraw() after)
-    chart2.redraw() // redraws chart
+    chart2.redraw(); // redraws chart
     secondChart.css("visibility","visible");
 }
 
@@ -297,7 +277,7 @@ function createModal(series) {
     if (series.web) {
         $modalWebsite.prepend('<p>' + series.web + '</p>');
         $modalWebsite.attr('href', series.web);
-        $modalWebsite.attr('target', "_blank")
+        $modalWebsite.attr('target', "_blank");
     }
     $exampleModal.modal('show');
     clearModal();
@@ -366,7 +346,7 @@ Highcharts.setOptions({
                     fontWeight: 'bold'
                 }
             }
-        },
+        }
     }, //end of plotOptions
     exporting: {
         enabled: false // can't print chart
@@ -393,16 +373,16 @@ Highcharts.setOptions({
                                 if (mq.matches) {
                                        // create variable to passed into setChart function
                                         setTimeout(function() {
-                                            setSecondChart(options)
+                                            setSecondChart(options);
                                         },700);
                                         options = buildOptions(drilldown,options);
 
                                 } else {
-                                    if (counter == 0) {
+                                    if (counter === 0) {
                                         counter++;
                                         moveChart();
                                         setTimeout(function() {
-                                            setSecondChart(options)
+                                            setSecondChart(options);
                                         },700);
                                         options = buildOptions(drilldown, options);
                                     } else {
@@ -419,8 +399,8 @@ Highcharts.setOptions({
             }, //plot options
             tooltip: {
                 formatter: function () {
-                    var point = this.point, // sets keyword 'this' -- this.point is really series.data
-                        s = point.name + ': ' + point.list + '. '; //formats pointer
+                    var point = this.point; // sets keyword 'this' -- this.point is really series.data
+                    var s = point.name + ': ' + point.list + '. '; //formats pointer
                     if (point.deepDrill) {
                         s = point.name + '<br/>' + 
                             'Services: ' + point.services + '<br/>' +
@@ -449,7 +429,7 @@ Highcharts.setOptions({
             }]
     } //chart1
 
-    var chart2 = {
+    chart2 = {
         chart: {
             renderTo: 'secondContainer'
         },
@@ -465,16 +445,16 @@ Highcharts.setOptions({
                             $(this.modal).modal('show');
                         }
                     }
-                },
+                }
             } //end of series
         }, //end of plotOptions
         tooltip: {
             formatter: function () {
                 if (mq.matches) {
-                    s = 'Please learn more from our pop-up'
+                    s = 'Please learn more from our pop-up';
                 } else {
-                var point = this.point, // sets keyword 'this' -- this.point is really series.data
-                    s = point.name + ': ' + point.list + '. '; //formats pointer
+                var point = this.point; // sets keyword 'this' -- this.point is really series.data
+                var s = point.name + ': ' + point.list + '. '; //formats pointer
                 if (point.deepDrill) {
                     s = point.name + '<br/>' + 
                         'Services: ' + point.services + '<br/>' +
@@ -500,7 +480,7 @@ Highcharts.setOptions({
         series: [{  // sets chart series here 
             type: chartType,
             name: name,
-            data: [{y:1}],
+            data: [{y:1}]
         }]
     }
 
