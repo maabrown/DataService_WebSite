@@ -21,6 +21,7 @@ $(document).ready( function() {
  var $modalWebsite = $('#modalWebsite');
  var $exampleModal = $('#exampleModal');
  var $closeModal = $('.close-modal');
+ var counter = 0;
 
  widthChange(mq, desktopMq, desktopMq2);
 
@@ -259,12 +260,9 @@ function moveChart() {
     } else if (desktopMq2) {
         firstChart.animate({'marginLeft' : "-=250px"}, 100);
         firstChart.css("display", "inline-block");
-
-        console.log('moveChart running');
     } else {
         firstChart.animate({'marginLeft' : "-=300px"}, 100);
         firstChart.css("display", "inline-block");
-        console.log('moveChart running');
     }   
 }
 
@@ -314,12 +312,29 @@ function clearModal() {
     });
 }
 
-var counter = 0;
-
-
-
-
-// chart2 = new Highcharts.Chart({
+function buildOptions(drilldown, options) {
+    if (drilldown) { // drill down
+        options = {
+                'title': drilldown.title,
+                'subtitle': drilldown.subtitle,
+                'name': drilldown.name,
+                'categories': drilldown.categories,
+                'data': drilldown.data,
+                'type': chartType
+        };
+    } else { // restore to first level
+        options = {
+                'title': title,
+                'subtitle': subtitle,
+                'name': name,
+                'categories': categories,
+                'data': data,
+                'type': chartType
+            // return options;
+        };
+    }
+    return options;
+}
 
 Highcharts.setOptions({
     credits: {
@@ -356,111 +371,106 @@ Highcharts.setOptions({
     }
 });
 
-var chart1 = {
-    chart: {
-        renderTo: 'chartContainer'
-    },
-    plotOptions: {
-        series: {
-            cursor: 'pointer', // cursor set to pointer since we have 'click' events
-            point: {
-                events: {
-                    click: function () {
-                        var drilldown = this.drilldown; // uses keyword 'this'
-                        var options; 
-                        mq.addListener(responsiveHighCharts);
-                        responsiveHighCharts(mq);
-                        
-                        
-                        function responsiveHighCharts(mq) {
-                            if (mq.matches) {
-                                   // create variable to passed into setChart function
-                                    setTimeout(function() {
-                                        setSecondChart(options)
-                                    },700);
-                                    if (drilldown) { // drill down
-                                        options = {
-                                                'title': drilldown.title,
-                                                'subtitle': drilldown.subtitle,
-                                                'name': drilldown.name,
-                                                'categories': drilldown.categories,
-                                                'data': drilldown.data,
-                                                'type': chartType
-                                        };
-                                    } else { // restore to first level
-                                        options = {
-                                                'title': title,
-                                                'subtitle': subtitle,
-                                                'name': name,
-                                                'categories': categories,
-                                                'data': data,
-                                                'type': chartType
-                                            // return options;
-                                        };
-                                    }
+    var chart1 = {
+        chart: {
+            renderTo: 'chartContainer'
+        },
+        plotOptions: {
+            series: {
+                cursor: 'pointer', // cursor set to pointer since we have 'click' events
+                point: {
+                    events: {
+                        click: function () {
+                            var drilldown = this.drilldown; // uses keyword 'this'
+                            var options; 
+                            mq.addListener(responsiveHighCharts);
+                            responsiveHighCharts(mq);
+                            
+                            
+                            function responsiveHighCharts(mq) {
+                                if (mq.matches) {
+                                       // create variable to passed into setChart function
+                                        setTimeout(function() {
+                                            setSecondChart(options)
+                                        },700);
+                                        options = buildOptions(drilldown,options);
 
-                            } else {
-                                if (counter == 0) {
-                                    counter++;
-                                    moveChart();
-                                    setTimeout(function() {
-                                        setSecondChart(options)
-                                    },700);
-                                    if (drilldown) { // drill down
-                                        options = {
-                                                'title': drilldown.title,
-                                                'subtitle': drilldown.subtitle,
-                                                'name': drilldown.name,
-                                                'categories': drilldown.categories,
-                                                'data': drilldown.data,
-                                                'type': chartType
-                                        };
-                                    } else { // restore to first level
-                                        options = {
-                                                'title': title,
-                                                'subtitle': subtitle,
-                                                'name': name,
-                                                'categories': categories,
-                                                'data': data,
-                                                'type': chartType
-                                            // return options;
-                                        };
-                                    }
                                 } else {
-                                    //var drilldown = this.drilldown; // uses keyword 'this'
-                                    //var options; // create variable to passed into setChart function
-                                    if (drilldown) { // drill down
-                                        options = {
-                                                'title': drilldown.title,
-                                                'subtitle': drilldown.subtitle,
-                                                'name': drilldown.name,
-                                                'categories': drilldown.categories,
-                                                'data': drilldown.data,
-                                                'type': chartType
-                                        };
-                                    } else { // restore to first level
-                                        options = {
-                                                'title': title,
-                                                'subtitle': subtitle,
-                                                'name': name,
-                                                'categories': categories,
-                                                'data': data,
-                                                'type': chartType
-                                            // return options;
-                                        };
+                                    if (counter == 0) {
+                                        counter++;
+                                        moveChart();
+                                        setTimeout(function() {
+                                            setSecondChart(options)
+                                        },700);
+                                        options = buildOptions(drilldown, options);
+                                    } else {
+                                        options = buildOptions(drilldown, options);
+                                        setSecondChart(options);
                                     }
-                                    setSecondChart(options);
-                                }
-                            } //end of responsive else statement
-                        }
+                                } //end of responsive else statement
+                            }
 
-                    } //end of click
-                } // end of events
-            } //points
-        } //series
-        }, //plot options
+                        } //end of click
+                    } // end of events
+                } //points
+            } //series
+            }, //plot options
+            tooltip: {
+                formatter: function () {
+                    var point = this.point, // sets keyword 'this' -- this.point is really series.data
+                        s = point.name + ': ' + point.list + '. '; //formats pointer
+                    if (point.deepDrill) {
+                        s = point.name + '<br/>' + 
+                            'Services: ' + point.services + '<br/>' +
+                            'Objective: ' + point.objective + '<br/>' + '<br/>' +
+                            '<em>' + 'Click to return home' + '</em>';
+                    } else if (point.objective == 'Numerous Objectives') { 
+                        s = point.name + '<br/>' + 
+                            '<em>' + 'Click Here to Learn More About ' + point.name + ' Projects' + '</em>';
+                    } else if (point.drilldown){
+                        s = 'Click to view ' + point.name;
+                    } else {
+                        s = point.name + '<br/>' + 
+                            'Initiative: ' + point.initiative + '<br/>' +
+                            'Services: ' + point.services + '<br/>' +
+                            'Objective: ' + point.objective + '<br/>' + '<br/>' +
+                            '<em>' + 'Click to Learn More' + '</em>';
+                    }
+                    return s;
+                }
+            }, //end of tooltip
+            series: [{  // sets chart series here 
+            type: chartType,
+            name: name,
+            data: data,
+            color: 'white' // don't know why you set this to white
+            }]
+    } //chart1
+
+    var chart2 = {
+        chart: {
+            renderTo: 'secondContainer'
+        },
+        plotOptions: {
+            series: {
+                cursor: 'pointer', // cursor set to pointer since we have 'click' events
+                point: {
+                    events: {
+                        click: function () {
+                            var drilldown = this.drilldown; // uses keyword 'this'
+                            var options; // create variable to passed into setChart function
+                            createModal(this);
+                            $(this.modal).modal('show');
+                        }
+                    }
+                },
+            } //end of series
+        }, //end of plotOptions
         tooltip: {
             formatter: function () {
+                if (mq.matches) {
+                    s = 'Please learn more from our pop-up'
+                } else {
                 var point = this.point, // sets keyword 'this' -- this.point is really series.data
                     s = point.name + ': ' + point.list + '. '; //formats pointer
                 if (point.deepDrill) {
@@ -479,480 +489,20 @@ var chart1 = {
                         'Services: ' + point.services + '<br/>' +
                         'Objective: ' + point.objective + '<br/>' + '<br/>' +
                         '<em>' + 'Click to Learn More' + '</em>';
+                    }
+                
                 }
                 return s;
             }
-        }, //end of tooltip
+        },
         series: [{  // sets chart series here 
-        type: chartType,
-        name: name,
-        data: data,
-        color: 'white' // don't know why you set this to white
+            type: chartType,
+            name: name,
+            data: [{y:1}],
         }]
-    } //chart1
-
-var chart2 = {
-    chart: {
-        renderTo: 'secondContainer'
-    },
-    plotOptions: {
-        series: {
-            cursor: 'pointer', // cursor set to pointer since we have 'click' events
-            point: {
-                events: {
-                    click: function () {
-                        var drilldown = this.drilldown; // uses keyword 'this'
-                        var options; // create variable to passed into setChart function
-                        createModal(this);
-                        $(this.modal).modal('show');
-                    }
-                }
-            },
-        } //end of series
-    }, //end of plotOptions
-    tooltip: {
-        formatter: function () {
-            if (mq.matches) {
-                s = 'Please learn more from our pop-up'
-            } else {
-            var point = this.point, // sets keyword 'this' -- this.point is really series.data
-                s = point.name + ': ' + point.list + '. '; //formats pointer
-            if (point.deepDrill) {
-                s = point.name + '<br/>' + 
-                    'Services: ' + point.services + '<br/>' +
-                    'Objective: ' + point.objective + '<br/>' + '<br/>' +
-                    '<em>' + 'Click to return home' + '</em>';
-            } else if (point.objective == 'Numerous Objectives') { 
-                s = point.name + '<br/>' + 
-                    '<em>' + 'Click Here to Learn More About ' + point.name + ' Projects' + '</em>';
-            } else if (point.drilldown){
-                s = 'Click to view ' + point.name;
-            } else {
-                s = point.name + '<br/>' + 
-                    'Initiative: ' + point.initiative + '<br/>' +
-                    'Services: ' + point.services + '<br/>' +
-                    'Objective: ' + point.objective + '<br/>' + '<br/>' +
-                    '<em>' + 'Click to Learn More' + '</em>';
-                }
-            
-            }
-            return s;
-        }
-    },
-    series: [{  // sets chart series here 
-        type: chartType,
-        name: name,
-        data: [{y:1}],
-    }]
-}
-
-// function Chart2Template() {
-//     this.chart = {
-//         renderTo: 'secondContainer', // passing it where to put it on the HTML - there is a div with ID 'chartContainer'
-//     }; // end of chart property
-    // this.plotOptions = {
-    //     series: {
-    //         cursor: 'pointer', // cursor set to pointer since we have 'click' events
-    //         point: {
-    //             events: {
-    //                 click: function () {
-    //                     var drilldown = this.drilldown; // uses keyword 'this'
-    //                     var options; // create variable to passed into setChart function
-    //                     createModal(this);
-    //                     $(this.modal).modal('show');
-    //                 }
-    //             }
-    //         },
-    //     } //end of series
-    // }; //end of plotOptions
-    // this.tooltip = {
-    //     formatter: function () {
-    //         if (mq.matches) {
-    //             s = 'Please learn more from our pop-up'
-    //         } else {
-    //         var point = this.point, // sets keyword 'this' -- this.point is really series.data
-    //             s = point.name + ': ' + point.list + '. '; //formats pointer
-    //         if (point.deepDrill) {
-    //             s = point.name + '<br/>' + 
-    //                 'Services: ' + point.services + '<br/>' +
-    //                 'Objective: ' + point.objective + '<br/>' + '<br/>' +
-    //                 '<em>' + 'Click to return home' + '</em>';
-    //         } else if (point.objective == 'Numerous Objectives') { 
-    //             s = point.name + '<br/>' + 
-    //                 '<em>' + 'Click Here to Learn More About ' + point.name + ' Projects' + '</em>';
-    //         } else if (point.drilldown){
-    //             s = 'Click to view ' + point.name;
-    //         } else {
-    //             s = point.name + '<br/>' + 
-    //                 'Initiative: ' + point.initiative + '<br/>' +
-    //                 'Services: ' + point.services + '<br/>' +
-    //                 'Objective: ' + point.objective + '<br/>' + '<br/>' +
-    //                 '<em>' + 'Click to Learn More' + '</em>';
-    //             }
-            
-    //         }
-    //         return s;
-    //     }
-    // };
-    // this.series = [{  // sets chart series here 
-    //     data: [{y:1}],
-    // }]
-// }; 
-// end of chart = new Highcharts.Chart()
-
-// function ChartTemplate() {
-//     this.chart = {
-//         style: {
-//             fontFamily: 'SourceSansProRegular, Open Sans, Helvetica Neue, Arial, sans-serif'
-//         },
-//         renderTo: 'chartContainer'
-//     };
-//     this.title = {
-//         text: title,
-//         style: {
-//             fontWeight: 'bold',
-//             textTransform: 'uppercase'
-//         }
-//     };
-//     this.subtitle = {
-//         text: subtitle
-//     };
-//     this.xAxis = {
-//         categories: categories
-//     };
-//     this.yAxis = { // i don't know get this
-//         showEmpty
-//     };
-//     this.plotOptions = {
-//         pie: {
-//             dataLabels: {
-//                 enabled: true,
-//                 color: 'black',
-//                 style: {
-//                     fontWeight: 'bold'
-//                 }
-//             }
-//         },
-//         series: {
-//             cursor: 'pointer', // cursor set to pointer since we have 'click' events
-//             point: {
-//                 events: {
-//                     click: function () {
-//                         var drilldown = this.drilldown; // uses keyword 'this'
-//                         var options; 
-//                         mq.addListener(responsiveHighCharts);
-//                         responsiveHighCharts(mq);
-                        
-                        
-//                         function responsiveHighCharts(mq) {
-//                             if (mq.matches) {
-//                                    // create variable to passed into setChart function
-//                                     setTimeout(function() {
-//                                         setSecondChart(options)
-//                                     },700);
-//                                     if (drilldown) { // drill down
-//                                         options = {
-//                                                 'title': drilldown.title,
-//                                                 'subtitle': drilldown.subtitle,
-//                                                 'name': drilldown.name,
-//                                                 'categories': drilldown.categories,
-//                                                 'data': drilldown.data,
-//                                                 'type': chartType
-//                                         };
-//                                     } else { // restore to first level
-//                                         options = {
-//                                                 'title': title,
-//                                                 'subtitle': subtitle,
-//                                                 'name': name,
-//                                                 'categories': categories,
-//                                                 'data': data,
-//                                                 'type': chartType
-//                                             // return options;
-//                                         };
-//                                     }
-
-//                             } else {
-//                                 if (counter == 0) {
-//                                     counter++;
-//                                     moveChart();
-//                                     setTimeout(function() {
-//                                         setSecondChart(options)
-//                                     },700);
-//                                     if (drilldown) { // drill down
-//                                         options = {
-//                                                 'title': drilldown.title,
-//                                                 'subtitle': drilldown.subtitle,
-//                                                 'name': drilldown.name,
-//                                                 'categories': drilldown.categories,
-//                                                 'data': drilldown.data,
-//                                                 'type': chartType
-//                                         };
-//                                     } else { // restore to first level
-//                                         options = {
-//                                                 'title': title,
-//                                                 'subtitle': subtitle,
-//                                                 'name': name,
-//                                                 'categories': categories,
-//                                                 'data': data,
-//                                                 'type': chartType
-//                                             // return options;
-//                                         };
-//                                     }
-//                                 } else {
-//                                     //var drilldown = this.drilldown; // uses keyword 'this'
-//                                     //var options; // create variable to passed into setChart function
-//                                     if (drilldown) { // drill down
-//                                         options = {
-//                                                 'title': drilldown.title,
-//                                                 'subtitle': drilldown.subtitle,
-//                                                 'name': drilldown.name,
-//                                                 'categories': drilldown.categories,
-//                                                 'data': drilldown.data,
-//                                                 'type': chartType
-//                                         };
-//                                     } else { // restore to first level
-//                                         options = {
-//                                                 'title': title,
-//                                                 'subtitle': subtitle,
-//                                                 'name': name,
-//                                                 'categories': categories,
-//                                                 'data': data,
-//                                                 'type': chartType
-//                                             // return options;
-//                                         };
-//                                     }
-//                                     setSecondChart(options);
-//                                 }
-//                             } //end of responsive else statement
-//                         }
-
-//                     } //end of click
-//                 } // end of events
-//             }
-//         } //end of series
-//     }; //end of plotOptions
-//     this.tooltip = {
-//         formatter: function () {
-//             var point = this.point, // sets keyword 'this' -- this.point is really series.data
-//                 s = point.name + ': ' + point.list + '. '; //formats pointer
-//             if (point.deepDrill) {
-//                 s = point.name + '<br/>' + 
-//                     'Services: ' + point.services + '<br/>' +
-//                     'Objective: ' + point.objective + '<br/>' + '<br/>' +
-//                     '<em>' + 'Click to return home' + '</em>';
-//             } else if (point.objective == 'Numerous Objectives') { 
-//                 s = point.name + '<br/>' + 
-//                     '<em>' + 'Click Here to Learn More About ' + point.name + ' Projects' + '</em>';
-//             } else if (point.drilldown){
-//                 s = 'Click to view ' + point.name;
-//             } else {
-//                 s = point.name + '<br/>' + 
-//                     'Initiative: ' + point.initiative + '<br/>' +
-//                     'Services: ' + point.services + '<br/>' +
-//                     'Objective: ' + point.objective + '<br/>' + '<br/>' +
-//                     '<em>' + 'Click to Learn More' + '</em>';
-//             }
-//             return s;
-//         }
-//     };
-//     this.series = [{  // sets chart series here 
-//         type: chartType,
-//         name: name,
-//         data: data,
-//         color: 'white' // don't know why you set this to white
-//     }],
-//     this.exporting = {
-//         enabled: false // can't print chart
-//     }
-// }; 
-// end of chart = new Highcharts.Chart()
-
-
-// var chartOptions = {
-//     credits: {
-//         enabled: false
-//     },
-//     chart: {
-//         style: {
-//             fontFamily: 'SourceSansProRegular, Open Sans, Helvetica Neue, Arial, sans-serif'
-//         },
-//         renderTo: 'chartContainer'
-//     }, // end of chart property
-//     title: {
-//         text: title,
-//         style: {
-//             fontWeight: 'bold',
-//             textTransform: 'uppercase'
-//         }
-//     },
-//     subtitle: {
-//         text: subtitle
-//     },
-//     plotOptions: {
-//         pie: {
-//             dataLabels: {
-//                 enabled: true,
-//                 color: 'black',
-//                 style: {
-//                     fontWeight: 'bold'
-//                 }
-//             }
-//         },
-//         series: {
-//             cursor: 'pointer', // cursor set to pointer since we have 'click' events
-//             point: {
-//                 events: {
-//                     click: function () {
-//                         var drilldown = this.drilldown; // uses keyword 'this'
-//                         var options; 
-//                         mq.addListener(responsiveHighCharts);
-//                         responsiveHighCharts(mq);
-                        
-                        
-//                         function responsiveHighCharts(mq) {
-//                             if (mq.matches) {
-//                                    // create variable to passed into setChart function
-//                                     setTimeout(function() {
-//                                         setSecondChart(options)
-//                                     },700);
-//                                     if (drilldown) { // drill down
-//                                         options = {
-//                                                 'title': drilldown.title,
-//                                                 'subtitle': drilldown.subtitle,
-//                                                 'name': drilldown.name,
-//                                                 'categories': drilldown.categories,
-//                                                 'data': drilldown.data,
-//                                                 'type': chartType
-//                                         };
-//                                     } else { // restore to first level
-//                                         options = {
-//                                                 'title': title,
-//                                                 'subtitle': subtitle,
-//                                                 'name': name,
-//                                                 'categories': categories,
-//                                                 'data': data,
-//                                                 'type': chartType
-//                                             // return options;
-//                                         };
-//                                     }
-
-//                             } else {
-//                                 if (counter == 0) {
-//                                     counter++;
-//                                     moveChart();
-//                                     setTimeout(function() {
-//                                         setSecondChart(options)
-//                                     },700);
-//                                     if (drilldown) { // drill down
-//                                         options = {
-//                                                 'title': drilldown.title,
-//                                                 'subtitle': drilldown.subtitle,
-//                                                 'name': drilldown.name,
-//                                                 'categories': drilldown.categories,
-//                                                 'data': drilldown.data,
-//                                                 'type': chartType
-//                                         };
-//                                     } else { // restore to first level
-//                                         options = {
-//                                                 'title': title,
-//                                                 'subtitle': subtitle,
-//                                                 'name': name,
-//                                                 'categories': categories,
-//                                                 'data': data,
-//                                                 'type': chartType
-//                                             // return options;
-//                                         };
-//                                     }
-//                                 } else {
-//                                     //var drilldown = this.drilldown; // uses keyword 'this'
-//                                     //var options; // create variable to passed into setChart function
-//                                     if (drilldown) { // drill down
-//                                         options = {
-//                                                 'title': drilldown.title,
-//                                                 'subtitle': drilldown.subtitle,
-//                                                 'name': drilldown.name,
-//                                                 'categories': drilldown.categories,
-//                                                 'data': drilldown.data,
-//                                                 'type': chartType
-//                                         };
-//                                     } else { // restore to first level
-//                                         options = {
-//                                                 'title': title,
-//                                                 'subtitle': subtitle,
-//                                                 'name': name,
-//                                                 'categories': categories,
-//                                                 'data': data,
-//                                                 'type': chartType
-//                                             // return options;
-//                                         };
-//                                     }
-//                                     setSecondChart(options);
-//                                 }
-//                             } //end of responsive else statement
-//                         }
-
-//                     } //end of click
-//                 } // end of events
-//             }
-//         } //end of series
-//     }, //end of plotOptions
-//     tooltip: {
-//         formatter: function () {
-//             var point = this.point, // sets keyword 'this' -- this.point is really series.data
-//                 s = point.name + ': ' + point.list + '. '; //formats pointer
-//             if (point.deepDrill) {
-//                 s = point.name + '<br/>' + 
-//                     'Services: ' + point.services + '<br/>' +
-//                     'Objective: ' + point.objective + '<br/>' + '<br/>' +
-//                     '<em>' + 'Click to return home' + '</em>';
-//             } else if (point.objective == 'Numerous Objectives') { 
-//                 s = point.name + '<br/>' + 
-//                     '<em>' + 'Click Here to Learn More About ' + point.name + ' Projects' + '</em>';
-//             } else if (point.drilldown){
-//                 s = 'Click to view ' + point.name;
-//             } else {
-//                 s = point.name + '<br/>' + 
-//                     'Initiative: ' + point.initiative + '<br/>' +
-//                     'Services: ' + point.services + '<br/>' +
-//                     'Objective: ' + point.objective + '<br/>' + '<br/>' +
-//                     '<em>' + 'Click to Learn More' + '</em>';
-//             }
-//             return s;
-//         }
-//     },
-//     series: [{  // sets chart series here 
-//         type: chartType,
-//         name: name,
-//         data: data,
-//         color: 'white' // don't know why you set this to white
-//     }],
-//     exporting: {
-//         enabled: false // can't print chart
-//     }
-// };
-
-// var option1 = chartOptions;
-// var option2 = chartOptions;
-
-// option1.color = "red";
-// option2.color = "green";
-
-// console.log(option1.color);
-// console.log(option2.color);
-
-// var charts = new ChartTemplate();
+    }
 
 chart = new Highcharts.Chart(chart1);
 chart2 = new Highcharts.Chart(chart2);
-
-// Chart2Template.prototype = new ChartTemplate();
-
-// var charts14 = new Chart2Template();
-
-// console.log(charts14);
-
-// chart2 = new Highcharts.Chart(charts14);
-
-
 
 }); // end of document.ready()
