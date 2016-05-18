@@ -1,3 +1,5 @@
+'use strict'
+
 var chart;
 var chart2;
 $('#exampleModal').modal('hide');
@@ -10,7 +12,7 @@ $(document).ready( function() {
  mq.addListener(widthChange);
  desktopMq.addListener(widthChange);
  desktopMq2.addListener(widthChange);
- $container = $('.container');
+ var $container = $('.container');
  var secondChart = $('#secondContainer'); 
  var firstChart = $('#chartContainer');
  var $modalName = $('#modalName');
@@ -51,13 +53,13 @@ function widthChange(mq, desktopMq, desktopMq2) {
 }
 
 var title = 'Projects';
-    chartType = 'pie';
-    subtitle = 'Click on a section to view more';
-    colors = Highcharts.getOptions().colors;
-    categories = ['Pre-Discovery', 'Discovery']; // category name matches 'name' property
-    name = 'Groups';
-    subtitle2 = 'Click section to Learn More';
-    data = [{
+var chartType = 'pie';
+var subtitle = 'Click on a section to view more';
+var colors = Highcharts.getOptions().colors;
+var categories = ['Pre-Discovery', 'Discovery']; // category name matches 'name' property
+var name = 'Groups';
+var subtitle2 = 'Click section to Learn More';
+var data = [{
         y: 1, // this is to determine how big the slice of the pie you want for this item
         name: 'Pre-Discovery', // this is the top group - used in  328, 339 for tool tip and resetting
         color: '#6bad50', // decide color for the slice
@@ -97,7 +99,7 @@ var title = 'Projects';
                 services: 'UI/UX, Data Science',
                 objective: 'Creating Data Driven Government',
                 modal: '#exampleModal',
-                picture: 'bureauLogos/DOC.jpg'
+                picture: 'bureauLogos/DOC.png'
             }]
         }
             }, {
