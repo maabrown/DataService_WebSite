@@ -32,7 +32,7 @@ gulp.task('browserSync', function() {
     });
 });
 
-gulp.task('useref', function() {
+gulp.task('concat', function() {
     return gulp.src('app/*.html')
         .pipe(useref())
         .pipe(gulpIf('*.js', jshint()))
@@ -65,7 +65,7 @@ gulp.task('watch', ['browserSync', 'sass'], function() {
 
 gulp.task('build', function(callback) {
     runSequence('clean:dist', 
-        ['sass', 'useref'],
+        ['sass', 'concat'],
         callback
         )
 })
