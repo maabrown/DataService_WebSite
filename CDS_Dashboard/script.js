@@ -294,9 +294,9 @@ function clearModal() {
     });
 }
 
-function buildOptions(drilldown, options) {
+function buildOptions(drilldown) {
     if (drilldown) { // drill down
-        options = {
+        var options = {
                 'title': drilldown.title,
                 'subtitle': drilldown.subtitle,
                 'name': drilldown.name,
@@ -305,7 +305,7 @@ function buildOptions(drilldown, options) {
                 'type': chartType
         };
     } else { // restore to first level
-        options = {
+        var options = {
                 'title': title,
                 'subtitle': subtitle,
                 'name': name,
@@ -363,19 +363,19 @@ Highcharts.setOptions({
                 point: {
                     events: {
                         click: function () {
-                            var drilldown = this.drilldown; // uses keyword 'this'
+                            // var drilldown = this.drilldown; // uses keyword 'this'
                             var options; 
                             mq.addListener(responsiveHighCharts);
-                            responsiveHighCharts(mq);
+                            responsiveHighCharts(mq, this.drilldown);
                             
                             
-                            function responsiveHighCharts(mq) {
+                            function responsiveHighCharts(mq, drilldown) {
                                 if (mq.matches) {
                                        // create variable to passed into setChart function
                                         setTimeout(function() {
                                             setSecondChart(options);
                                         },700);
-                                        options = buildOptions(drilldown,options);
+                                        options = buildOptions(drilldown);
 
                                 } else {
                                     if (counter === 0) {
@@ -384,9 +384,9 @@ Highcharts.setOptions({
                                         setTimeout(function() {
                                             setSecondChart(options);
                                         },700);
-                                        options = buildOptions(drilldown, options);
+                                        options = buildOptions(drilldown);
                                     } else {
-                                        options = buildOptions(drilldown, options);
+                                        options = buildOptions(drilldown);
                                         setSecondChart(options);
                                     }
                                 } //end of responsive else statement
