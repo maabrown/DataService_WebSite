@@ -364,18 +364,18 @@ Highcharts.setOptions({
                     events: {
                         click: function () {
                             // var drilldown = this.drilldown; // uses keyword 'this'
-                            var options; 
+                            // var options; 
                             mq.addListener(responsiveHighCharts);
                             responsiveHighCharts(mq, this.drilldown);
                             
                             
                             function responsiveHighCharts(mq, drilldown) {
+                                var options = buildOptions(drilldown);
                                 if (mq.matches) {
                                        // create variable to passed into setChart function
                                         setTimeout(function() {
                                             setSecondChart(options);
                                         },700);
-                                        options = buildOptions(drilldown);
 
                                 } else {
                                     if (counter === 0) {
@@ -384,9 +384,7 @@ Highcharts.setOptions({
                                         setTimeout(function() {
                                             setSecondChart(options);
                                         },700);
-                                        options = buildOptions(drilldown);
                                     } else {
-                                        options = buildOptions(drilldown);
                                         setSecondChart(options);
                                     }
                                 } //end of responsive else statement
