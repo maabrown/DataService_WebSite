@@ -15,9 +15,12 @@
   <body class="setBlueBackground" id="topOfBox" >
   <div class="container">
     <div class="row">
+
     <form class=" controls " id="Filters">
 
-        <div id= "topofFrame" height="30px"></div>
+        <div id= "topofFrame" height="30px">
+
+        </div>
 
             <div class="">
 
@@ -40,111 +43,18 @@
     <div id="Container" class="container topOfCont setBlueBackground">
         
 
-        <div class=" mix dev " >
-            <a href="#Sasan"  data-toggle="modal">
-              <img  src="BioPics/sasan.png" width="100%" alt="Sasan Bahadaran" class="img-circle">
-            </a>
-        </div>
 
-        <div class=" mix dev" >
-              <a href="#Radhika"  data-toggle="modal">
-                  <img src="BioPics/radhika.png" width="100%" alt="Radhika Bhatt" class="img-circle">
+        <script id="thumbnailTemplate" type="text/x-handlebars-template">
+          {{#each data}}
+          <div class="{{teams}}" >
+              <a href="#{{first_name}}"  data-toggle="modal">
+                <img  src="BioPics/{{picture_file}}" width="100%" alt="{{first_name}} {{last_name}}" class="img-circle">
               </a>
-        </div>
-        
-        <div class=" mix datasci " >
-            <a href="#Rebecca" data-toggle="modal">
-                <img src="BioPics/Rebecca.jpg" width="100%" alt="Rebecca Bilbro" class="img-circle">
-            </a>
-        </div>
-        
-        <div class=" mix dev " >
-              <a href="#Mark" data-toggle="modal">
-                  <img src="BioPics/mark.png" width="100%" alt="Mark Brown II" class="img-circle">
-              </a>
-        </div>
-        
-        <div class=" mix datasci lead" >
-              <a href="#Jeffrey" data-toggle="modal">
-                  <img src="BioPics/jeff.png" width="100%" alt="Jeffrey Chen" class="img-circle">
-              </a>
-        </div>
-        
-         <div class="mix lead " >
-              <a href="#Tyrone" data-toggle="modal">
-                  <img src="BioPics/tyrone.png" width="100%" alt="Tyrone Grandison" class="img-circle">
-              </a>
-        </div>
-        
-        <div class="mix dev " >
-              <a href="#Negar" data-toggle="modal">
-                  <img src="BioPics/negar.png" width="100%" alt="Negar Kalibasi" class="img-circle">
-              </a>
-        </div>
-        
-        <div class="mix lead " >
-              <a href="#Ian" data-toggle="modal">
-                  <img src="BioPics/Ian.jpg" width="100%" alt="Ian Kalin" class="img-circle">
-              </a>
-        </div>
-        
-        <div class="mix edu " >
-              <a href="#Natassja" data-toggle="modal">
-                  <img src="BioPics/natassja.png" width="100%" alt="Natassja Linzau" class="img-circle">
-              </a>
-        </div>
-        
-        <div class="mix datasci " >
-              <a href="#Priyanka" data-toggle="modal">
-                  <img src="BioPics/pri.png" width="100%" alt="Priyanka Oberoi" class="img-circle">
-              </a>
-        </div>
-        
-        <div class="mix dev " >
-              <a href="#Alison" data-toggle="modal">
-                  <img src="BioPics/alison.png" width="100%" alt="Alison Rowland" class="img-circle">
-              </a>
-        </div>
-        
-        <div class="mix datasci " >
-              <a href="#Star" data-toggle="modal">
-                  <img src="BioPics/star.png" width="100%" alt="Star Ying" class="img-circle">
-              </a>
-        </div>
-        
-        <div class=" mix office " >
-            <a href="#Burton"  data-toggle="modal">
-              <img  src="BioPics/Burton.jpg" width="100%" alt="Burton Reist" class="img-circle">
-            </a>
-        </div>
-        
-        <div class=" mix edu " >
-            <a href="#Noura"  data-toggle="modal">
-              <img  src="BioPics/noura.png" width="100%" alt="Noura Azeem" class="img-circle">
-            </a>
-        </div>
-        
-        <div class="mix datasci dev " >
-              <a href="#Karolina" data-toggle="modal">
-                  <img src="BioPics/karolina.png" width="100%" alt="Karolina Hamilton" class="img-circle">
-              </a>
-        </div>
-        
-        <div class="mix dev " >
-              <!-- <a href="#Amit" data-toggle="modal"> -->
-                  <img src="BioPics/amit.png" width="100%" alt="Amit Gupta" class="img-circle">
-              
-        </div>
-        <div class=" mix edu " >
-            <!-- <a href="#Pam"  data-toggle="modal"> -->
-              <img  src="BioPics/pam.png" width="100%" alt="Pam Moulder" class="img-circle">
-            
-        </div>
-        <div class="mix office " >
-              <!-- <a href="#Tonja" data-toggle="modal"> -->
-                  <img src="BioPics/tonja.png" width="100%" alt="Tonja White" class="img-circle">
-              
-        </div>
+          </div>
+          {{/each}}
+        </script>        
+
+
     </div>
       
     <div id="teamModals"></div>  
@@ -165,7 +75,7 @@
                     <div class="row">
                         <div class="col-lg-4 col-md-4 col-sm-4">
                             
-                            <img class="img-responsive img-centered img-circle" src="BioPics/{{toLowerCase first_name}}.png" alt="{{first_name}} {{last_name}}">
+                            <img class="img-responsive img-centered img-circle" src="BioPics/{{picture_file}}" alt="{{first_name}} {{last_name}}">
                             
                         </div>
                         <div class="col-lg-7  col-md-7 modalTextStyles" style="text-align:left; color: black">
