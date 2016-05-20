@@ -242,9 +242,6 @@ $('#teamModals').append(html);
 //   it will scroll you to the top
 $('.touchModal').on('show.bs.modal', function(e) {
  var modal = $(this);
- //modal.css( "border", " 3px solid red");
  var framei = document.getElementById("topOfBox");
- console.log(framei);
  framei.scrollIntoView(true);
- console.log('this launched');
 });
