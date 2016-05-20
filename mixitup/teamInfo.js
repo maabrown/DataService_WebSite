@@ -207,7 +207,7 @@ var context =
       },
       {
          "quote_author":"Virgin, Aenid 1.461",
-         "picture_file":"tyrone.png",
+         "picture_file":"star.png",
          "uid":18,
          "life_Story":"I love working with exotic forms of data. Previously, I served as a Mathematical Statistician in the U.S. Census Bureau, working with the Decennial Census operation, the American Community Survey, Reimbursable Demographic Surveys, and Economic Indicator Surveys.",
          "position":"Data Scientist",
@@ -225,6 +225,7 @@ Handlebars.registerHelper('toLowerCase', function(options) {
     return newString;
 })
 
+//This is for the initial thumbnail view
 var thumbnailSource = $('#thumbnailTemplate').html();
 var thumbnailTemplate = Handlebars.compile(thumbnailSource);
 var thumbnailHTML = thumbnailTemplate(context);
