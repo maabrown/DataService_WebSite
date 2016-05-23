@@ -29,7 +29,7 @@
                             <button class="filter" data-filter=".datasci">Data Science</button>
                             <button class="filter" data-filter=".lead">Leadership</button>
                             <button class="filter" data-filter=".edu">Education</button>
-                            <button class="filter" data-filter=".office">Office</button>
+                            <button class="filter" data-filter=".office">Operations</button>
                         </fieldset>
                         <button id="Reset" style="background:darkred;color:white">Clear Filters</button>
                     </div>     
@@ -52,12 +52,13 @@
 
 
     </div>
-      
+
     <div id="teamModals"></div>  
 <!-- Modal for each story  -->
     <script id="modalTemplate" type="text/x-handlebars-template">
         {{#each data}}
         <div class=" modal fade touchModal" id="{{first_name}}" tabindex="-1" role="dialog" aria-hidden="true" >
+
             <div class="modal-content setWhiteBackground" >
                 <div class="close-modal" data-dismiss="modal">
                     <div class="lr">
