@@ -77,7 +77,7 @@ var data = [{
                 services: 'UI/UX, Back-End',
                 objective: 'Delivering Data Services',
                 modal: '#exampleModal',
-                picture: 'bureauLogos/NOAA.jpg'
+                picture: '../ImageCarousel/bureauLogos/noaa-logo.png'
             }]
         }},
             {
@@ -98,7 +98,7 @@ var data = [{
                 services: 'UI/UX, Data Science',
                 objective: 'Creating Data Driven Government',
                 modal: '#exampleModal',
-                picture: 'bureauLogos/DOC.png'
+                picture: '../ImageCarousel/bureauLogos/doc-logo.png'
             }]
         }
             }, {
@@ -119,7 +119,7 @@ var data = [{
                 services: 'Data Science, Back-End',
                 objective: 'Creating Data-Driven Government',
                 modal: '#exampleModal',
-                picture: 'bureauLogos/NIST.jpg'
+                picture: '../ImageCarousel/bureauLogos/nist-logo.png'
             }, {
                 y: 1,
                 name: 'NIST',
@@ -128,7 +128,7 @@ var data = [{
                 services: 'Data Science, Back-End',
                 objective: 'Creating Data-Driven Government',
                 modal: '#exampleModal',
-                picture: 'bureauLogos/NIST.jpg'
+                picture: '../ImageCarousel/bureauLogos/nist-logo.png'
             }, {
                 y: 1,
                 name: 'PTO',
@@ -137,7 +137,7 @@ var data = [{
                 services: 'General',
                 objective: 'Fueling Economic Growth',
                 modal: '#exampleModal',
-                picture: 'bureauLogos/USPTO.jpg'
+                picture: '../ImageCarousel/bureauLogos/uspto-logo.png'
             }, {
                 y: 1,
                 name: 'ITA',
@@ -146,7 +146,7 @@ var data = [{
                 services: 'UI/UX, Back-End',
                 objective: 'Delivering Data Services',
                 modal: '#exampleModal',
-                picture: 'bureauLogos/ITA.jpg'
+                picture: '../ImageCarousel/bureauLogos/ita-logo.png'
             }, {
                 y: 1,
                 name: 'ITA',
@@ -154,7 +154,7 @@ var data = [{
                 initiative: 'New Exporters Project',
                 services: 'Data Science',
                 objective: 'Fueling Economic Growth',
-                picture: 'bureauLogos/ITA.jpg'
+                picture: '../ImageCarousel/bureauLogos/ita-logo.png'
             }, {
                 y: 1,
                 name: 'BEA',
@@ -163,7 +163,7 @@ var data = [{
                 services: 'UI/UX',
                 objective: 'Delivering Data Services',
                 modal: '#exampleModal',
-                picture: 'bureauLogos/BEA.jpg'
+                picture: '../ImageCarousel/bureauLogos/bea-logo.png'
             }]
         }
     }, {
@@ -183,7 +183,7 @@ var data = [{
                 initiative: 'Income Inequality',
                 services: 'General',
                 objective: 'Fueling Economic Growth',
-                picture: 'bureauLogos/CENSUS.jpg',
+                picture: '../ImageCarousel/bureauLogos/census-logo.png',
                 web: 'https://midaas.commerce.gov/'
             }, {
                 y: 1,
@@ -192,7 +192,7 @@ var data = [{
                 initiative: 'Commerce Data Usability Project',
                 services: 'UX/UI, Data Science, Back-End',
                 objective: 'Delivering Data Services',
-                picture: 'bureauLogos/DOC.png',
+                picture: '../ImageCarousel/bureauLogos/doc-logo.png',
                 web: 'https://www.commerce.gov/datausability/'
             }, {
                 y: 1,
@@ -201,7 +201,7 @@ var data = [{
                 initiative: 'Data.Commerce.Gov',
                 services: 'General',
                 objective: 'Fueling Economic Growth',
-                picture: 'bureauLogos/DOC.png',
+                picture: '../ImageCarousel/bureauLogos/doc-logo.png',
                 web: 'https://data.commerce.gov/'
             }, {
                 y: 1, 
@@ -210,7 +210,7 @@ var data = [{
                 initiative: 'White House Council of Women and Girls',
                 services: 'Data Science, UX/UI',
                 objective: 'Delivering Data Services',
-                picture: 'bureauLogos/DOC.png'
+                picture: '../ImageCarousel/bureauLogos/doc-logo.png'
             }, {
                 y: 1,
                 name: 'DOC',
@@ -218,7 +218,7 @@ var data = [{
                 initiative: 'Commerce Data Academy',
                 services: 'General',
                 objective: 'Creating Data Driven Government',
-                picture: 'bureauLogos/DOC.png',
+                picture: '../ImageCarousel/bureauLogos/doc-logo,png',
                 web: 'https://dataacademy.commerce.gov/'
             }, {
                 y: 1,
@@ -227,7 +227,7 @@ var data = [{
                 initiative: 'Commerce Data Advisory Council (CDAC)',
                 services: 'General',
                 objective: 'Fueling Economic Growth',
-                picture: 'bureauLogos/ESA.jpg',
+                picture: '../ImageCarousel/bureauLogos/esa-logo.png',
                 web: 'http://www.esa.gov/cdac/'
             }]
         }
@@ -261,8 +261,7 @@ function setSecondChart(options) {
         name: options.name,
         data: options.data,
         color: options.color || 'white'
-    }, false); // adds the series (which contains the data) - we pass it a new object and tell it false so it doesn't automatically re-render
-     // xAxis[0] since there is only 1 axis - setCategory sets categories from the array you pass it (options.categories - you use false so it doesn't automatically redraw THUS you use chart.redraw() after)
+    }, false);
     chart2.redraw(); // redraws chart
     secondChart.css("visibility","visible");
 }
