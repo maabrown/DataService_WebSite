@@ -16,5 +16,5 @@ with open('../mixitup/CDS Team Responses - Sheet1.csv', 'rt') as f:
         if i != 0:
             course_json.append(mapjson(course, i))
 
-with open('../mixitup/cds_team2.json', 'wt') as f:
+with open('../mixitup/cds_team.json', 'wt') as f:
     json.dump({ 'data':course_json }, f)
