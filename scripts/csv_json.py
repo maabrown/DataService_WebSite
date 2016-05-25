@@ -8,7 +8,7 @@ def mapjson(course, uid, course_key = ['first_name','last_name','position','team
     return course_entry
 
 course_json = []
-with open('./CDS Team Responses - Sheet1.csv', 'rt') as f:
+with open('../mixitup/CDS Team Responses - Sheet1.csv', 'rt') as f:
     courses = csv.reader(f)
     for i, course in enumerate(courses):
         # if i == 0:
@@ -16,5 +16,5 @@ with open('./CDS Team Responses - Sheet1.csv', 'rt') as f:
         if i != 0:
             course_json.append(mapjson(course, i))
 
-with open('cds_team.json', 'wt') as f:
+with open('../mixitup/cds_team2.json', 'wt') as f:
     json.dump({ 'data':course_json }, f)
