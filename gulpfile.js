@@ -12,7 +12,7 @@ var sourcemaps = require('gulp-sourcemaps'); // allows you to use sourcempas to 
 var autoprefixer = require('gulp-autoprefixer'); // adds prefixes to CSS files
 var jshint = require('gulp-jshint'); // lints JS files
 
-gulp.task('sass', function() {
+gulp.task('sass', 'translates sass to CSS', function() {
     return gulp.src('app/scss/**/*.scss')
         .pipe(sourcemaps.init())
         .pipe(sass())
@@ -24,7 +24,7 @@ gulp.task('sass', function() {
     }))
 })
 
-gulp.task('browserSync', function() {
+gulp.task('browserSync', 'watches files and refreshes browser', function() {
     browserSync.init({
         server: {
             baseDir: "app"
@@ -32,7 +32,7 @@ gulp.task('browserSync', function() {
     });
 });
 
-gulp.task('concat', function() {
+gulp.task('concat', 'concatenates JS and CSS files in HTML document', function() {
     return gulp.src('app/*.html')
         .pipe(useref())
         .pipe(gulpIf('*.js', jshint()))
@@ -42,11 +42,11 @@ gulp.task('concat', function() {
         .pipe(gulp.dest('dist'))
 })
 
-gulp.task('clean:dist', function() {
+gulp.task('clean:dist', 'deletes files in the dist directory', function() {
     return del.sync('dist');
 })
 
-gulp.task('jsscripts', function() {
+gulp.task('jsscripts', 'translates JS and adds sourcemaps and lints', function() {
     gulp.src(['app/*.js'])
         .pipe(jshint())
         .pipe(jshint.reporter('default'))
@@ -57,20 +57,20 @@ gulp.task('jsscripts', function() {
         .pipe(browserSync.reload({stream:true}))
 })
 
-gulp.task('watch', ['browserSync', 'sass'], function() {
+gulp.task('watch', 'executes sass function and then launches the browserSync task', ['browserSync', 'sass'], function() {
     gulp.watch('app/scss/**/*.scss', ['sass']);
     gulp.watch('app/*.html', browserSync.reload);
     gulp.watch('app/*.js', browserSync.reload);
 })
 
-gulp.task('build', function(callback) {
+gulp.task('build', 'builds final versions of HTML/JS/CSS files for prod', function(callback) {
     runSequence('clean:dist', 
         ['sass', 'concat'],
         callback
         )
 })
 
-gulp.task('default', function(callback) {
+gulp.task('default', 'tasks to be used while working on files', function(callback) {
     runSequence(['sass', 'browserSync', 'watch', 'jsscripts'],
         callback
         )
