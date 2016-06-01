@@ -36,6 +36,7 @@
 
 .our-team-title{
   color: white;
+  padding-top: 50px; 
 }
 
 .darken {
@@ -47,8 +48,7 @@
     url(../img/header.jpg);
 }
 
-
-.classRow {
+.class-row {
   padding-top: 30px;
 }
 
