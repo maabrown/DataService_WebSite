@@ -1,5 +1,4 @@
 
-
 $.ajax({
    type: 'GET',
    url: 'cds_team.json',
