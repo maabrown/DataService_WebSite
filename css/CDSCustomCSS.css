@@ -36,6 +36,7 @@
 
 .our-team-title{
   color: white;
+  padding-top: 50px; 
 }
 
 .darken {
@@ -50,6 +51,7 @@
 .datacorps h2, p, i, h4 {
   color: white;
 }
+
 
 
 /* This is the for the mobile icons to show as DoC IT would like them to show
