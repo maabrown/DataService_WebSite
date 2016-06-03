@@ -10,7 +10,6 @@ $.ajax({
       var thumbnailSource = $('#thumbnailTemplate').html();
       var thumbnailTemplate = Handlebars.compile(thumbnailSource);
       var thumbnailHTML = thumbnailTemplate(data);
-      console.log(thumbnailHTML);
       $('#Container').append(thumbnailHTML);
 
       //This is the initial modal build
