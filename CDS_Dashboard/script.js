@@ -370,7 +370,7 @@ Highcharts.setOptions({
                                        // create variable to passed into setChart function
                                         setTimeout(function() {
                                             setSecondChart(options);
-                                        },700);
+                                        },300);
 
                                 } else {
                                     if (counter === 0) {
@@ -378,7 +378,7 @@ Highcharts.setOptions({
                                         moveChart();
                                         setTimeout(function() {
                                             setSecondChart(options);
-                                        },700);
+                                        },300);
                                     } else {
                                         setSecondChart(options);
                                     }
@@ -480,10 +480,10 @@ Highcharts.setOptions({
     widthChange(mq, desktopMq, desktopMq2);
 
     chart = new Highcharts.Chart(chart1);
-    chart2 = new Highcharts.Chart(chart2);
+    
 
 $(document).ready( function() {
 
-
+    chart2 = new Highcharts.Chart(chart2);
 
 }); // end of document.ready()
