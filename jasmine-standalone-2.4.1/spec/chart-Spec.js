@@ -1,8 +1,10 @@
-$(function () {
-	describe('chart first test', function() {
-		it('tests that charts exist', function() {
-			expect(chart1).toBeDefined();
-			console.log(chart1);
-		})
-	})
-});
+    describe('chart test', function() {
+        var chartElement = $('#chartContainer').html();
+        
+        it('checks that charts exist', function() {
+        	$(document).ready( function() {
+                expect(chartElement).toBeDefined();
+                
+        })
+        })
+    })

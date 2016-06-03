@@ -4,29 +4,6 @@ var chart;
 var chart2;
 $('#exampleModal').modal('hide');
 
-
-$(document).ready( function() {
- var mq = window.matchMedia("(max-width: 600px)");
- var desktopMq = window.matchMedia("(max-width: 800px)");
- var desktopMq2 = window.matchMedia('(max-width: 1290px)');
- mq.addListener(widthChange);
- desktopMq.addListener(widthChange);
- desktopMq2.addListener(widthChange);
- var $container = $('.container');
- var secondChart = $('#secondContainer'); 
- var firstChart = $('#chartContainer');
- var $modalName = $('#modalName');
- var $modalInitiative = $('#modalInitiative');
- var $modalServices = $('#modalServices');
- var $modalObjective = $('#modalObjective');
- var $modalPicture = $('#modalPicture');
- var $modalWebsite = $('#modalWebsite');
- var $exampleModal = $('#exampleModal');
- var $closeModal = $('.close-modal');
- var counter = 0;
-
- widthChange(mq, desktopMq, desktopMq2);
-
 function widthChange(mq, desktopMq, desktopMq2) {
     if (mq.matches) {
         $container.css('width', '550px');
@@ -52,7 +29,26 @@ function widthChange(mq, desktopMq, desktopMq2) {
     }
 }
 
-var title = 'Projects';
+ var mq = window.matchMedia("(max-width: 600px)");
+ var desktopMq = window.matchMedia("(max-width: 800px)");
+ var desktopMq2 = window.matchMedia('(max-width: 1290px)');
+ mq.addListener(widthChange);
+ desktopMq.addListener(widthChange);
+ desktopMq2.addListener(widthChange);
+ var $container = $('.container');
+ var secondChart = $('#secondContainer'); 
+ var firstChart = $('#chartContainer');
+ var $modalName = $('#modalName');
+ var $modalInitiative = $('#modalInitiative');
+ var $modalServices = $('#modalServices');
+ var $modalObjective = $('#modalObjective');
+ var $modalPicture = $('#modalPicture');
+ var $modalWebsite = $('#modalWebsite');
+ var $exampleModal = $('#exampleModal');
+ var $closeModal = $('.close-modal');
+ var counter = 0;
+
+ var title = 'Projects';
 var chartType = 'pie';
 var subtitle = 'Click on a section to view more';
 var categories = ['Pre-Discovery', 'Discovery']; // category name matches 'name' property
@@ -479,9 +475,15 @@ Highcharts.setOptions({
             name: name,
             data: [{y:1}]
         }]
-    }
+}
 
-chart = new Highcharts.Chart(chart1);
-chart2 = new Highcharts.Chart(chart2);
+    widthChange(mq, desktopMq, desktopMq2);
+
+    chart = new Highcharts.Chart(chart1);
+    chart2 = new Highcharts.Chart(chart2);
+
+$(document).ready( function() {
+
+
 
 }); // end of document.ready()
